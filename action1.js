@@ -1,6 +1,6 @@
 export default function(payload) {
   return {
-    type: 'UPDATE',
+    type: 'UPDATE_1',
     payload,
   };
 }

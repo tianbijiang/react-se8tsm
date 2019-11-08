@@ -2,23 +2,27 @@ import { createSelector } from 'reselect';
 import { memoize } from 'lodash';
 
 // Option 1
-// const valueSelector = (state, myProp) => `value from redux: ${state.valueFromRedux} , value from prop: ${myProp}`;
-// const selector = () => createSelector(
-//   [valueSelector],
-//   value => {
-//     console.log(`selector selected: ${value}`);
-//     return value;
-//   }
-// );
-
-// Option 2
-const valueSelector = (state) => `value from redux: ${state.valueFromRedux}`;
-const selector = memoize((myProp) => createSelector(
+const valueSelector = (state, myProp) => {
+  return myProp ? state.value1FromRedux : state.value2FromRedux;
+};
+const selector = () => createSelector(
   [valueSelector],
   value => {
-    console.log(`${value} , value from prop: ${myProp}`);
-    return `${value} , value from prop: ${myProp}`;
+    console.log("selecting " + value);
+    return value;
   }
-));
+);
+
+// Option 2
+// const value1Selector = (state) => state.value1FromRedux;
+// const value2Selector = (state) => state.value2FromRedux;
+// const selector = memoize((myProp) => createSelector(
+//   [value1Selector, value2Selector],
+//   (value1, value2) => {
+//     const value = myProp ? value1 : value2;
+//     console.log("selecting " + value);
+//     return value;
+//   }
+// ));
 
 export default selector;
