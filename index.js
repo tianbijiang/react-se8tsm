@@ -6,6 +6,7 @@ import { Provider, connect } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import action1 from './action1';
 import action2 from './action2';
+import action3 from './action3';
 import value1Reducer from './value1Reducer';
 import value2Reducer from './value2Reducer';
 import value3Reducer from './value3Reducer';
@@ -24,6 +25,7 @@ class App extends Component {
     this.state = {
       otherProp: Math.random(),
       myProp: true,
+      storeValue3: parseInt(Math.random()*100),
       child2: false,
     };
   }
@@ -41,6 +43,15 @@ class App extends Component {
           <button onClick={() => {
             store.dispatch(action2(parseInt(Math.random()*100)));
           }}>update redux store value 2</button>
+        </div>
+
+        <div>
+          <button onClick={() => {
+            const storeValue3 = parseInt(Math.random()*100);
+            this.setState({ storeValue3 });
+            store.dispatch(action3(storeValue3))}
+          }>update irrelevant redux store value</button>
+          {this.props.value3FromRedux}
         </div>
 
         <div>

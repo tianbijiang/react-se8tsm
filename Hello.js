@@ -14,6 +14,15 @@ class Hello extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.setState({
+      storeValueInterested: this.props.finalDetails,
+    });
+    this.setState({
+      storeValue3: this.props.value3FromRedux,
+    });
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.finalDetails !== nextProps.finalDetails) {
       this.setState({
@@ -34,56 +43,42 @@ class Hello extends React.Component {
         child {this.props.myProp ? "1" : "2"}:
 
         {this.props.myProp && <div>
-          update interested redux store value: 
           <button onClick={() => {
-            const storeValueInterested = this.state.storeValueInterested;
-            this.setState({ storeValueInterested: storeValueInterested+1 });
-            this.props.action1(storeValueInterested+1);
-          }}>+</button>
-          {this.state.storeValueInterested}
-          <button onClick={() => {
-            const storeValueInterested = this.state.storeValueInterested;
-            this.setState({ storeValueInterested: storeValueInterested-1 });
-            this.props.action1(storeValueInterested-1);
-          }}>-</button>
+            const storeValueInterested = Math.random()*100;
+            this.setState({ storeValueInterested });
+            this.props.action1(storeValueInterested);
+          }}>update interested redux store value</button>
           <button onClick={() => this.props.action1(this.state.storeValueInterested)}>
             resend same value
           </button>
+          {this.state.storeValueInterested}
         </div>}
 
         {!this.props.myProp && <div>
-          update interested redux store value: 
           <button onClick={() => {
-            const storeValueInterested = this.state.storeValueInterested;
-            this.setState({ storeValueInterested: storeValueInterested+1 });
-            this.props.action2(storeValueInterested+1);
-          }}>+</button>
-          {this.state.storeValueInterested}
-          <button onClick={() => {
-            const storeValueInterested = this.state.storeValueInterested;
-            this.setState({ storeValueInterested: storeValueInterested-1 });
-            this.props.action2(storeValueInterested-1);
-          }}>-</button>
+            const storeValueInterested = Math.random()*100;
+            this.setState({ storeValueInterested });
+            this.props.action2(storeValueInterested);
+          }}>update interested redux store value</button>
           <button onClick={() => this.props.action2(this.state.storeValueInterested)}>
             resend same value
           </button>
+          {this.state.storeValueInterested}
         </div>}
-
-        <div>interested redux value now is: {JSON.stringify(this.props.finalDetails)}</div>
 
         <div>
           <button onClick={() => {
-            const storeValue3 = Math.random();
+            const storeValue3 = parseInt(Math.random()*100);
             this.setState({ storeValue3 });
             this.props.action3(storeValue3)}
           }>update irrelevant redux store value</button>
           <button onClick={() => this.props.action3(this.state.storeValue3)}>
             resend same value
           </button>
+          {this.props.value3FromRedux}
         </div>
-        <div>irrelevant redux value now is: {this.props.value3FromRedux}</div>
         
-        <div>(irrelevant prop {this.props.otherProp})</div>
+        <div>irrelevant prop is {this.props.otherProp})</div>
       </div>);
   }
 }
