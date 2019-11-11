@@ -2,16 +2,16 @@ import { createSelector } from 'reselect';
 import { memoize } from 'lodash';
 
 // Option 1
-const valueSelector = (state, myProp) => {
-  return myProp ? state.value1FromRedux : state.value2FromRedux;
-};
-const selector = () => createSelector(
-  [valueSelector],
-  value => {
-    console.log("selecting " + value);
-    return value;
-  }
-);
+// const valueSelector = (state, myProp) => {
+//   return myProp ? state.value1FromRedux : state.value2FromRedux;
+// };
+// const selector = () => createSelector(
+//   [valueSelector],
+//   value => {
+//     console.log("selecting " + value);
+//     return value;
+//   }
+// );
 
 // Option 2
 // const value1Selector = (state) => state.value1FromRedux;
@@ -24,5 +24,17 @@ const selector = () => createSelector(
 //     return value;
 //   }
 // ));
+
+// Option 3
+const valueSelector = (state, myProp) => {
+  return myProp ? state.value1FromRedux : state.value2FromRedux;
+};
+const selector = memoize((myProp) => createSelector(
+  [valueSelector],
+  (value) => {
+    console.log("selecting " + value);
+    return value;
+  }
+));
 
 export default selector;

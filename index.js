@@ -6,12 +6,16 @@ import { Provider, connect } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import value1Reducer from './value1Reducer';
 import value2Reducer from './value2Reducer';
+import value3Reducer from './value3Reducer';
 import action1 from './action1';
 import action2 from './action2';
+import action3 from './action3';
+
 
 const rootReducer = combineReducers({
   value1FromRedux: value1Reducer,
   value2FromRedux: value2Reducer,
+  value3FromRedux: value3Reducer,
 });
 
 const store = createStore(rootReducer);
@@ -24,6 +28,8 @@ class App extends Component {
       myProp: true,
       storeValue1: 0,
       storeValue2: 0,
+      storeValue3: 0,
+      child2: false,
     };
   }
   
@@ -43,6 +49,9 @@ class App extends Component {
             this.setState({ storeValue1: storeValue1-1 });
             store.dispatch(action1(storeValue1-1));
           }}>-</button>
+          <button onClick={() => store.dispatch(action1(this.state.storeValue1))}>
+            resend same value
+          </button>
         </div>
 
         <div>
@@ -58,12 +67,29 @@ class App extends Component {
             this.setState({ storeValue2: storeValue2-1 });
             store.dispatch(action2(storeValue2-1));
           }}>-</button>
+          <button onClick={() => store.dispatch(action2(this.state.storeValue2))}>
+            resend same value
+          </button>
         </div>
-        
+
         <div>
-          <button onClick={() => this.setState({ myProp: !this.state.myProp })}>pass my prop to children from parent:</button>
-          {JSON.stringify(this.state.myProp)}
+          update redux store value 3: 
+          <button onClick={() => {
+            const storeValue3 = this.state.storeValue3;
+            this.setState({ storeValue3: storeValue3+1 });
+            store.dispatch(action3(storeValue3+1));
+          }}>+</button>
+          {this.state.storeValue3}
+          <button onClick={() => {
+            const storeValue3 = this.state.storeValue3;
+            this.setState({ storeValue3: storeValue3-1 });
+            store.dispatch(action3(storeValue3-1));
+          }}>-</button>
+          <button onClick={() => store.dispatch(action3(this.state.storeValue3))}>
+            resend same value
+          </button>
         </div>
+      
         <div>
           <button onClick={() => this.setState({
             otherProp: Math.random()
@@ -71,10 +97,12 @@ class App extends Component {
           pass irrelevant prop to children from parent
           </button>
         </div>
-        =====
+
+        <div><button onClick={() => this.setState({child2: !this.state.child2})}>toggle child2</button></div>
+
         <div>
           <Hello myProp={this.state.myProp} otherProp={this.state.otherProp}/>
-          <Hello myProp={this.state.myProp} otherProp={this.state.otherProp}/>
+          {this.state.child2 && <Hello myProp={!this.state.myProp} otherProp={this.state.otherProp}/>}
         </div>
       </div>
     );
