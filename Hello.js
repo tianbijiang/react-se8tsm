@@ -4,6 +4,7 @@ import action1 from './action1';
 import action2 from './action2';
 import action3 from './action3';
 import selector from './selector';
+import anotherSelector from './anotherSelector';
 
 class Hello extends React.Component {
   constructor(props) {
@@ -44,7 +45,7 @@ class Hello extends React.Component {
 
         {this.props.myProp && <div>
           <button onClick={() => {
-            const storeValueInterested = Math.random()*100;
+            const storeValueInterested = parseInt(Math.random()*100);
             this.setState({ storeValueInterested });
             this.props.action1(storeValueInterested);
           }}>update interested redux store value</button>
@@ -56,7 +57,7 @@ class Hello extends React.Component {
 
         {!this.props.myProp && <div>
           <button onClick={() => {
-            const storeValueInterested = Math.random()*100;
+            const storeValueInterested = parseInt(Math.random()*100);
             this.setState({ storeValueInterested });
             this.props.action2(storeValueInterested);
           }}>update interested redux store value</button>
@@ -77,8 +78,8 @@ class Hello extends React.Component {
           </button>
           {this.props.value3FromRedux}
         </div>
-        
-        <div>irrelevant prop is {this.props.otherProp})</div>
+        <div>derived redux store value: {this.props.derivedValue}</div>
+        <div>irrelevant prop is {this.props.otherProp}</div>
       </div>);
   }
 }
@@ -100,8 +101,9 @@ class Hello extends React.Component {
 
 // Option 3 working
 const mapStateToProps = (state, props) => ({
-  finalDetails: selector(props.myProp)(state, props.myProp),
+  finalDetails: selector(props.myProp)(state),
   value3FromRedux: state.value3FromRedux,
+  derivedValue: anotherSelector(props.myProp)(state),
 });
 
 // Option 4 not working

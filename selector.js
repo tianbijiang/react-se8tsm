@@ -26,11 +26,11 @@ import { memoize } from 'lodash';
 // ));
 
 // Option 3 working
-const valueSelector = (state, myProp) => {
+const valueSelector = (myProp) => (state) => {
   return myProp ? state.value1FromRedux : state.value2FromRedux;
 };
 const selector = memoize((myProp) => createSelector(
-  [valueSelector],
+  [valueSelector(myProp)],
   (value) => {
     console.log("selecting " + value);
     return value;
