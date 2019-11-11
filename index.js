@@ -32,6 +32,14 @@ class App extends Component {
       child2: false,
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.value3FromRedux !== nextProps.value3FromRedux) {
+      this.setState({
+        storeValue3: value3FromRedux,
+      });
+    }
+  }
   
   render() {
     return (
@@ -73,18 +81,11 @@ class App extends Component {
         </div>
 
         <div>
-          update redux store value 3: 
           <button onClick={() => {
-            const storeValue3 = this.state.storeValue3;
-            this.setState({ storeValue3: storeValue3+1 });
-            store.dispatch(action3(storeValue3+1));
-          }}>+</button>
-          {this.state.storeValue3}
-          <button onClick={() => {
-            const storeValue3 = this.state.storeValue3;
-            this.setState({ storeValue3: storeValue3-1 });
-            store.dispatch(action3(storeValue3-1));
-          }}>-</button>
+            const storeValue3 = Math.random();
+            this.setState({ storeValue3 });
+            store.dispatch(action3(storeValue3))}
+          }>update irrelevant redux store value</button>
           <button onClick={() => store.dispatch(action3(this.state.storeValue3))}>
             resend same value
           </button>

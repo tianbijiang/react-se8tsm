@@ -13,24 +13,31 @@ const Hello = (props) => {
       </div>);
 }
 
-// Option 1
+// Option 1 working
 // const mapStateToProps = () => {
 //   const selectorInstance = selector();
 //   return (state, props) => ({
 //     finalDetails: selectorInstance(state, props.myProp),
+//     value3FromRedux: state.value3FromRedux,
 //   });
 // }
 
-// Option 2
+// Option 2 not working
 // const mapStateToProps = (state, props) => ({
 //   finalDetails: selector(props.myProp)(state),
 //   value3FromRedux: state.value3FromRedux,
 // });
 
-// Option 3
+// Option 3 working
 const mapStateToProps = (state, props) => ({
   finalDetails: selector(props.myProp)(state, props.myProp),
   value3FromRedux: state.value3FromRedux,
 });
+
+// Option 4 not working
+// const mapStateToProps = (state, props) => ({
+//   finalDetails: selector(state, props.myProp),
+//   value3FromRedux: state.value3FromRedux,
+// });
 
 export default connect(mapStateToProps)(Hello);
