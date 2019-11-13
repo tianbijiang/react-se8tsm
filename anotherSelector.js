@@ -1,11 +1,12 @@
 import selector from './selector';
+import { valueSelector } from './selector';
 import { createSelector } from 'reselect';
 import { memoize } from 'lodash';
 
 const anotherSelector = memoize((myProp) => createSelector(
-  [selector(myProp)],
+  [valueSelector(myProp)],
   (value) => {
-    console.log("chaining selector invoked");
+    console.log("derived selector invoked");
     return `${value} is an ${value%2 ? 'odd' : 'even'} number`;
   }
 ));

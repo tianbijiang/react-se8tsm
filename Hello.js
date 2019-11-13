@@ -5,6 +5,7 @@ import action2 from './action2';
 import action3 from './action3';
 import selector from './selector';
 import anotherSelector from './anotherSelector';
+import chainSelector from './chainSelector';
 
 class Hello extends React.Component {
   constructor(props) {
@@ -79,6 +80,7 @@ class Hello extends React.Component {
           {this.props.value3FromRedux}
         </div>
         <div>derived redux store value: {this.props.derivedValue}</div>
+        <div>chained redux store value: {this.props.chainedValue}</div>
         <div>irrelevant prop is {this.props.otherProp}</div>
       </div>);
   }
@@ -104,6 +106,7 @@ const mapStateToProps = (state, props) => ({
   finalDetails: selector(props.myProp)(state),
   value3FromRedux: state.value3FromRedux,
   derivedValue: anotherSelector(props.myProp)(state),
+  chainedValue: chainSelector(props.myProp)(state),
 });
 
 // Option 4 not working
