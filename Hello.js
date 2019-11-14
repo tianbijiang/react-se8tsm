@@ -6,6 +6,7 @@ import action3 from './action3';
 import selector from './selector';
 import anotherSelector from './anotherSelector';
 import chainSelector from './chainSelector';
+import actionForSaga from './actionForSaga';
 
 class Hello extends React.Component {
   constructor(props) {
@@ -81,6 +82,7 @@ class Hello extends React.Component {
         </div>
         <div>derived redux store value: {this.props.derivedValue}</div>
         <div>chained redux store value: {this.props.chainedValue}</div>
+        <div><button onClick={() => this.props.actionForSaga({myProp: this.props.myProp})}>fire action for saga value {this.props.myProp ? "1" : "2"}</button></div>
         <div>irrelevant prop is {this.props.otherProp}</div>
       </div>);
   }
@@ -119,6 +121,7 @@ const mapDispatchToProps = (dispatch) => ({
   action1: (value) => dispatch(action1(value)),
   action2: (value) => dispatch(action2(value)),
   action3: (value) => dispatch(action3(value)),
+  actionForSaga: (value) => dispatch(actionForSaga(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Hello);
