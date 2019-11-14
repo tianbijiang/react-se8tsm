@@ -6,16 +6,15 @@ import { Provider, connect } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import action1 from './action1';
-import action2 from './action2';
 import action3 from './action3';
+import reducerCreator from './reducerCreator';
 import value1Reducer from './value1Reducer';
-import value2Reducer from './value2Reducer';
 import value3Reducer from './value3Reducer';
 import saga from './saga';
 
 const rootReducer = combineReducers({
-  value1FromRedux: value1Reducer,
-  value2FromRedux: value2Reducer,
+  value1FromRedux: reducerCreator(value1Reducer, false),
+  value2FromRedux: reducerCreator(value1Reducer, true),
   value3FromRedux: value3Reducer,
 });
 const sagaMiddleware = createSagaMiddleware();
@@ -38,13 +37,13 @@ class App extends Component {
       <div>
         <div>
           <button onClick={() => {
-            store.dispatch(action1(parseInt(Math.random()*100)));
+            store.dispatch(action1({num: parseInt(Math.random()*100), secReducer: false}));
           }}>update redux store value 1</button>
         </div>
 
         <div>
           <button onClick={() => {
-            store.dispatch(action2(parseInt(Math.random()*100)));
+            store.dispatch(action1({num: parseInt(Math.random()*100), secReducer: true}));
           }}>update redux store value 2</button>
         </div>
 
@@ -52,7 +51,7 @@ class App extends Component {
           <button onClick={() => {
             const storeValue3 = parseInt(Math.random()*100);
             this.setState({ storeValue3 });
-            store.dispatch(action3(storeValue3))}
+            store.dispatch(action3({num: storeValue3 }))}
           }>update irrelevant redux store value</button>
           {this.props.value3FromRedux}
         </div>

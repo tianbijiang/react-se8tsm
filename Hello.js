@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import action1 from './action1';
-import action2 from './action2';
 import action3 from './action3';
 import selector from './selector';
 import anotherSelector from './anotherSelector';
@@ -49,9 +48,9 @@ class Hello extends React.Component {
           <button onClick={() => {
             const storeValueInterested = parseInt(Math.random()*100);
             this.setState({ storeValueInterested });
-            this.props.action1(storeValueInterested);
+            this.props.action1({num: storeValueInterested, secReducer: false});
           }}>update interested redux store value</button>
-          <button onClick={() => this.props.action1(this.state.storeValueInterested)}>
+          <button onClick={() => this.props.action1({num: this.state.storeValueInterested, secReducer: false})}>
             resend same value
           </button>
           {this.state.storeValueInterested}
@@ -61,9 +60,9 @@ class Hello extends React.Component {
           <button onClick={() => {
             const storeValueInterested = parseInt(Math.random()*100);
             this.setState({ storeValueInterested });
-            this.props.action2(storeValueInterested);
+            this.props.action1({num: storeValueInterested, secReducer: true});
           }}>update interested redux store value</button>
-          <button onClick={() => this.props.action2(this.state.storeValueInterested)}>
+          <button onClick={() => this.props.action1({num: this.state.storeValueInterested, secReducer: true})}>
             resend same value
           </button>
           {this.state.storeValueInterested}
@@ -73,9 +72,9 @@ class Hello extends React.Component {
           <button onClick={() => {
             const storeValue3 = parseInt(Math.random()*100);
             this.setState({ storeValue3 });
-            this.props.action3(storeValue3)}
+            this.props.action3({ num: storeValue3 })}
           }>update irrelevant redux store value</button>
-          <button onClick={() => this.props.action3(this.state.storeValue3)}>
+          <button onClick={() => this.props.action3({num: this.state.storeValue3})}>
             resend same value
           </button>
           {this.props.value3FromRedux}
@@ -119,7 +118,6 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   action1: (value) => dispatch(action1(value)),
-  action2: (value) => dispatch(action2(value)),
   action3: (value) => dispatch(action3(value)),
   actionForSaga: (value) => dispatch(actionForSaga(value)),
 });
