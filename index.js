@@ -12,6 +12,7 @@ import value1Reducer from './value1Reducer';
 import value3Reducer from './value3Reducer';
 import saga from './saga';
 
+// reuse reducer
 const rootReducer = combineReducers({
   value1FromRedux: reducerCreator(value1Reducer, false),
   value2FromRedux: reducerCreator(value1Reducer, true),

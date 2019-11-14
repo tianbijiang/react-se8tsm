@@ -2,6 +2,7 @@ import anotherSelector from './anotherSelector';
 import { createSelector } from 'reselect';
 import { memoize } from 'lodash';
 
+// another end selector
 const chainSelector = memoize((myProp) => createSelector(
   [anotherSelector(myProp)],
   (value) => {
