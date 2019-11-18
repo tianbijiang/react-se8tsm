@@ -11,6 +11,7 @@ import reducerCreator from './reducerCreator';
 import value1Reducer from './value1Reducer';
 import value3Reducer from './value3Reducer';
 import saga from './saga';
+import Context from './context';
 
 // reuse reducer
 const rootReducer = combineReducers({
@@ -27,7 +28,6 @@ class App extends Component {
     super(props);
     this.state = {
       otherProp: Math.random(),
-      myProp: true,
       storeValue3: parseInt(Math.random()*100),
       child2: false,
     };
@@ -68,8 +68,10 @@ class App extends Component {
         <div><button onClick={() => this.setState({child2: !this.state.child2})}>toggle child2</button></div>
 
         <div>
-          <Hello myProp={this.state.myProp} otherProp={this.state.otherProp}/>
-          {this.state.child2 && <Hello myProp={!this.state.myProp} otherProp={this.state.otherProp}/>}
+          <Context.Provider value={{myProp: true}}>
+            <Hello myProp={true} otherProp={this.state.otherProp}/>
+          </Context.Provider>
+          {this.state.child2 && <Context.Provider myProp={false} value={{myProp: false}}><Hello otherProp={this.state.otherProp}/></Context.Provider>}
         </div>
       </div>
     );

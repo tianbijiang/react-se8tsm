@@ -6,6 +6,7 @@ import selector from './selector';
 import anotherSelector from './anotherSelector';
 import chainSelector from './chainSelector';
 import actionForSaga from './actionForSaga';
+import Context from './context';
 
 class Hello extends React.Component {
   constructor(props) {
@@ -42,9 +43,9 @@ class Hello extends React.Component {
     return (
       <div>
         <br></br>
-        child {this.props.myProp ? "1" : "2"}:
+        child {this.context.myProp ? "1" : "2"}:
 
-        {this.props.myProp && <div>
+        {this.context.myProp && <div>
           <button onClick={() => {
             const storeValueInterested = parseInt(Math.random()*100);
             this.setState({ storeValueInterested });
@@ -56,7 +57,7 @@ class Hello extends React.Component {
           {this.state.storeValueInterested}
         </div>}
 
-        {!this.props.myProp && <div>
+        {!this.context.myProp && <div>
           <button onClick={() => {
             const storeValueInterested = parseInt(Math.random()*100);
             this.setState({ storeValueInterested });
@@ -80,7 +81,7 @@ class Hello extends React.Component {
           {this.props.value3FromRedux}
         </div>
         <div>chained redux store value: {this.props.chainedValue}</div>
-        <div><button onClick={() => this.props.actionForSaga({myProp: this.props.myProp})}>fire action for saga value {this.props.myProp ? "1" : "2"}</button></div>
+        <div><button onClick={() => this.props.actionForSaga({myProp: this.context.myProp})}>fire action for saga value {this.context.myProp ? "1" : "2"}</button></div>
         <div>irrelevant prop is {this.props.otherProp}</div>
       </div>);
   }
@@ -120,4 +121,7 @@ const mapDispatchToProps = (dispatch) => ({
   actionForSaga: (value) => dispatch(actionForSaga(value)),
 });
 
+Hello.contextType = Context;
+
 export default connect(mapStateToProps, mapDispatchToProps)(Hello);
+
