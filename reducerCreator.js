@@ -16,7 +16,6 @@ export default function(reducerFunction, secReducer, reducerName) {
       if (inputState !== newState) {
         return newState;
       }
-      return state;
     }
 
     if (!source && secReducer === false) {
